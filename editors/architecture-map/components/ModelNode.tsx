@@ -1,6 +1,9 @@
 import { Handle, Position, type NodeProps } from "@xyflow/react";
 import type { ModelNode as ModelNodeType } from "../lib/types.js";
 
+const hiddenHandle = "!bg-transparent !border-0 !w-1 !h-1 !min-w-0 !min-h-0";
+const visibleHandle = "!bg-slate-300 !w-1.5 !h-1.5 !border-0";
+
 export function ModelNode({ data, selected }: NodeProps<ModelNodeType>) {
   return (
     <div
@@ -11,11 +14,58 @@ export function ModelNode({ data, selected }: NodeProps<ModelNodeType>) {
         minWidth: 220,
       }}
     >
+      {/* Vertical handles (same-column connections) */}
       <Handle
         type="target"
         position={Position.Top}
-        className="!bg-slate-400 !w-2 !h-2"
+        id="target-top"
+        className={visibleHandle}
       />
+      <Handle
+        type="source"
+        position={Position.Top}
+        id="source-top"
+        className={visibleHandle}
+      />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        id="source-bottom"
+        className={visibleHandle}
+      />
+      <Handle
+        type="target"
+        position={Position.Bottom}
+        id="target-bottom"
+        className={visibleHandle}
+      />
+
+      {/* Horizontal handles (cross-column connections) */}
+      <Handle
+        type="target"
+        position={Position.Left}
+        id="target-left"
+        className={hiddenHandle}
+      />
+      <Handle
+        type="source"
+        position={Position.Left}
+        id="source-left"
+        className={hiddenHandle}
+      />
+      <Handle
+        type="target"
+        position={Position.Right}
+        id="target-right"
+        className={hiddenHandle}
+      />
+      <Handle
+        type="source"
+        position={Position.Right}
+        id="source-right"
+        className={hiddenHandle}
+      />
+
       <div className="px-3 py-2">
         <div className="text-sm font-semibold text-slate-800 truncate">
           {data.name}
@@ -58,11 +108,6 @@ export function ModelNode({ data, selected }: NodeProps<ModelNodeType>) {
           </div>
         )}
       </div>
-      <Handle
-        type="source"
-        position={Position.Bottom}
-        className="!bg-slate-400 !w-2 !h-2"
-      />
     </div>
   );
 }

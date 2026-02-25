@@ -21,6 +21,15 @@ export interface ModelNodeData extends Record<string, unknown> {
 
 export type ModelNode = Node<ModelNodeData, "modelNode">;
 
+export interface CategoryHeaderData extends Record<string, unknown> {
+  name: string;
+  color: string;
+  borderColor: string;
+  modelCount: number;
+}
+
+export type CategoryHeaderNode = Node<CategoryHeaderData, "categoryHeader">;
+
 export const CATEGORY_COLORS: Record<ModelCategory, string> = {
   Finance: "#fff3e0",
   Identity: "#e8f5e9",
