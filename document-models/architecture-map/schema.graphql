@@ -1,0 +1,220 @@
+scalar Unknown
+scalar DateTime
+scalar Attachment
+scalar Address
+scalar Amount_Tokens
+scalar EthereumAddress
+scalar EmailAddress
+scalar Amount_Percentage
+scalar Date
+scalar URL
+scalar Amount_Money
+scalar OLabel
+scalar Currency
+scalar PHID
+scalar OID
+scalar Amount_Fiat
+scalar Amount_Currency
+scalar Amount_Crypto
+scalar Amount
+scalar Upload
+
+enum ModelCategory {
+    Finance
+    Identity
+    Services
+    Projects
+}
+
+enum RelationshipType {
+    Reference
+    Dependency
+    DataFlow
+}
+
+enum IntegrationDirection {
+    Inbound
+    Outbound
+}
+
+type ExternalIntegration {
+    provider: String!
+    direction: IntegrationDirection!
+    description: String
+}
+
+type DocumentModel {
+    id: ID!
+    name: String!
+    type: String!
+    category: ModelCategory!
+    description: String
+    operationCount: Int!
+    hasTypedState: Boolean!
+    externalIntegrations: [ExternalIntegration!]!
+}
+
+type Relationship {
+    id: ID!
+    sourceModelType: String!
+    targetModelType: String!
+    fieldName: String!
+    relationshipType: RelationshipType!
+    description: String
+}
+
+type Integration {
+    id: ID!
+    modelType: String!
+    provider: String!
+    direction: IntegrationDirection!
+    description: String
+}
+
+type Category {
+    id: ID!
+    name: String!
+    color: String!
+    description: String
+}
+
+type DriveApp {
+    id: ID!
+    name: String!
+    slug: String!
+    description: String
+    color: String
+    modelTypes: [String!]!
+}
+
+type ArchitectureMapState {
+    models: [DocumentModel!]!
+    relationships: [Relationship!]!
+    integrations: [Integration!]!
+    categories: [Category!]!
+    driveApps: [DriveApp!]
+}
+
+# model
+
+input ExternalIntegrationInput {
+    provider: String!
+    direction: IntegrationDirection!
+    description: String
+}
+
+input AddModelInput {
+    id: ID!
+    name: String!
+    type: String!
+    category: ModelCategory!
+    description: String
+    operationCount: Int!
+    hasTypedState: Boolean!
+    externalIntegrations: [ExternalIntegrationInput!]
+}
+
+input UpdateModelInput {
+    id: ID!
+    name: String
+    type: String
+    category: ModelCategory
+    description: String
+    operationCount: Int
+    hasTypedState: Boolean
+    externalIntegrations: [ExternalIntegrationInput!]
+}
+
+input RemoveModelInput {
+    id: ID!
+}
+
+# relationship
+
+input AddRelationshipInput {
+    id: ID!
+    sourceModelType: String!
+    targetModelType: String!
+    fieldName: String!
+    relationshipType: RelationshipType!
+    description: String
+}
+
+input UpdateRelationshipInput {
+    id: ID!
+    sourceModelType: String
+    targetModelType: String
+    fieldName: String
+    relationshipType: RelationshipType
+    description: String
+}
+
+input RemoveRelationshipInput {
+    id: ID!
+}
+
+# integration
+
+input AddIntegrationInput {
+    id: ID!
+    modelType: String!
+    provider: String!
+    direction: IntegrationDirection!
+    description: String
+}
+
+input UpdateIntegrationInput {
+    id: ID!
+    modelType: String
+    provider: String
+    direction: IntegrationDirection
+    description: String
+}
+
+input RemoveIntegrationInput {
+    id: ID!
+}
+
+# category
+
+input AddCategoryInput {
+    id: ID!
+    name: String!
+    color: String!
+    description: String
+}
+
+input UpdateCategoryInput {
+    id: ID!
+    name: String
+    color: String
+    description: String
+}
+
+input RemoveCategoryInput {
+    id: ID!
+}
+
+# driveApp
+
+input AddDriveAppInput {
+    id: ID!
+    name: String!
+    slug: String!
+    description: String
+    color: String
+    modelTypes: [String!]!
+}
+
+input UpdateDriveAppInput {
+    id: ID!
+    name: String
+    slug: String
+    description: String
+    color: String
+    modelTypes: [String!]
+}
+
+input RemoveDriveAppInput {
+    id: ID!
+}
